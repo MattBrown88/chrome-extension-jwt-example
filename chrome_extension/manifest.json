@@ -4,7 +4,7 @@
   "version": "1",
   "description": "JWT authentication example",
   "action": {
-    "default_icon": "images/mic_stopped.png"
+    "default_icon": "images/technics.svg"
   },
   "background": {
     "service_worker": "scripts/background.js",
