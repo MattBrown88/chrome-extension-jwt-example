@@ -52,8 +52,6 @@ class MoveJWTRefreshCookieIntoTheBody(MiddlewareMixin):
             if request.body != b'':
                 data = json.loads(request.body)
                 data['refresh'] = request.COOKIES[settings.REST_AUTH['JWT_AUTH_REFRESH_COOKIE']]
-                if settings.REST_AUTH['JWT_AUTH_COOKIE'] in request.COOKIES:
-                    data['access'] = request.COOKIES[settings.REST_AUTH['JWT_AUTH_COOKIE']]
                 
                 request._body = json.dumps(data).encode('utf-8')
             else:
