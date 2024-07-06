@@ -21,8 +21,8 @@ function getNewAccessToken() {
         .then(response => response.json())
         .then(data => {
             if (data.access) {
-                chrome.action.setBadgeText({ text: 'Refre' });
-                    chrome.action.setBadgeBackgroundColor({ color: 'blue' }); // Optional: Set the badge color
+                chrome.action.setBadgeText({ text: 'Refr' });
+                chrome.action.setBadgeBackgroundColor({ color: 'blue' }); // Optional: Set the badge color
                 return data.access;
             } else {
                 console.log('Failed to get a new access token');
@@ -34,9 +34,6 @@ function getNewAccessToken() {
             return null;
         });
 }
-
-chrome.action.setBadgeText({ text: 'Verified' });
-chrome.action.setBadgeBackgroundColor({ color: 'green' }); // Optional: Set the badge color
 
 
 function verifyToken() {
@@ -54,7 +51,7 @@ function verifyToken() {
         })
             .then(response => {
                 if (response.ok) {
-                    chrome.action.setBadgeText({ text: 'Verify' });
+                    chrome.action.setBadgeText({ text: 'Verif' });
                     chrome.action.setBadgeBackgroundColor({ color: 'green' }); // Optional: Set the badge color
                     console.log('Token is valid');
                     resolve(response.json());  // Token is valid
@@ -75,6 +72,8 @@ function verifyToken() {
 function activateApp(tab) {
     verifyToken().then(data => {
         if (!data) {
+            chrome.action.setBadgeText({ text: 'Exp' });
+            chrome.action.setBadgeBackgroundColor({ color: 'red' }); // Optional: Set the badge color
             console.log('user not logged in')
             let newUrl = `${baseUrl}/accounts/login/`;
             chrome.tabs.create({ url: newUrl });
@@ -90,7 +89,7 @@ function activateApp(tab) {
 
 function startApp() {
     console.log('The app has started!')
-    
+
 
 }
 
