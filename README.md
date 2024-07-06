@@ -38,5 +38,4 @@ Click the extension icon, if the user is not logged in, it should open the login
 Once the user has logged in, the badge on the icon will specify if the token is verified, refreshed or expired.
 In this example, the access token is set to expire in 10s and the refresh token in 30s.
 
-[DEMO VIDEO]
-
+![Alt Text](app_demo.gif)
