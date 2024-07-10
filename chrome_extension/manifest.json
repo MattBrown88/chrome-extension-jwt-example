@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "JWT authentication example",
-  "version": "1",
+  "version": "1.0",
   "description": "JWT authentication example",
   "action": {
     "default_icon": "images/technics.svg"
@@ -11,14 +11,5 @@
     "type": "module"
   },
   "permissions": ["cookies", "storage", "scripting", "activeTab"],
-  "host_permissions": ["https://tts-backend-web-ylr2fkceba-uc.a.run.app/*", "http://localhost:8000/*"], 
-  "commands": {
-    "_execute_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+V",
-        "mac": "Command+Shift+V"
-      },
-      "description": "Start dictating!"
-    }
-  }
+  "host_permissions": ["http://localhost:8000/*"]
 }
