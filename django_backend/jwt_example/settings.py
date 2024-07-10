@@ -123,27 +123,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # NEW
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": [
-#          "rest_framework.authentication.SessionAuthentication",
-#          "rest_framework.authentication.BasicAuthentication",
-#          'dj_rest_auth.jwt_auth.JWTCookieAuthentication', 
-#         #'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ],
-#     # "DEFAULT_PERMISSION_CLASSES": ("apps.api.permissions.IsAuthenticatedOrHasUserAPIKey",),
-#     # "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-#     # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-#     "PAGE_SIZE": 100,
-# }
-
-# NEW
-# import timedelta
+from datetime import timedelta
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-from datetime import timedelta
+
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(seconds=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(seconds=30),
@@ -164,8 +151,17 @@ REST_AUTH = {
     "USER_DETAILS_SERIALIZER": "apps.users.serializers.CustomUserSerializer",
 }
 
-# TODO: Test with next deployment
-# CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=["http://localhost:8000"])
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS=False
+LOGIN_REDIRECT_URL = '/'
+
 
 CSRF_TRUSTED_ORIGINS = [
     'chrome-extension://pnchahhkakickfihmeklhjgeacjhcdii'
@@ -189,21 +185,3 @@ TEMPLATES = [
         },
     },
 ]
-
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS=False
-LOGIN_REDIRECT_URL = '/'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.example.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@example.com'
-EMAIL_HOST_PASSWORD = 'your-email-password'

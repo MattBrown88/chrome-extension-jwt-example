@@ -25,11 +25,10 @@ from rest_framework_simplejwt.views import TokenVerifyView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", home, name="home"),
     
-    # NEW
     path("accounts/", include("allauth.urls")),
     path("accounts/login", CustomLoginView.as_view(), name="account_login"),
-    path("", home, name="home"),
     
     # restauth views
     path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),

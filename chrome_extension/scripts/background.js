@@ -1,38 +1,24 @@
 // background.js
-
 console.log('background.js started');
 
-
-let sessionId = null;
 let baseUrl = 'http://localhost:8000';
 
-
-function getNewAccessToken() {
-    console.log('getNewAccessToken()');
-    let url = baseUrl;
-    return fetch(`${baseUrl}/token/refresh/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({}),
-        credentials: 'include'  // Necessary to include cookies
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.access) {
-                chrome.action.setBadgeText({ text: 'Refr' });
-                chrome.action.setBadgeBackgroundColor({ color: 'blue' }); // Optional: Set the badge color
-                return data.access;
-            } else {
-                console.log('Failed to get a new access token');
-                return null;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+function activateApp(tab) {
+    verifyToken().then(data => {
+        if (!data) {
+            chrome.action.setBadgeText({ text: 'Exp' });
+            chrome.action.setBadgeBackgroundColor({ color: 'red' }); // Optional: Set the badge color
+            console.log('user not logged in')
+            let newUrl = `${baseUrl}/accounts/login/`;
+            chrome.tabs.create({ url: newUrl });
             return null;
-        });
+        }
+        else {
+            startApp();
+        }
+    }).catch(error => {
+        console.error('this is the error: ', error);
+    });
 }
 
 
@@ -69,35 +55,44 @@ function verifyToken() {
 }
 
 
-function activateApp(tab) {
-    verifyToken().then(data => {
-        if (!data) {
-            chrome.action.setBadgeText({ text: 'Exp' });
-            chrome.action.setBadgeBackgroundColor({ color: 'red' }); // Optional: Set the badge color
-            console.log('user not logged in')
-            let newUrl = `${baseUrl}/accounts/login/`;
-            chrome.tabs.create({ url: newUrl });
+
+function getNewAccessToken() {
+    console.log('getNewAccessToken()');
+    let url = baseUrl;
+    return fetch(`${baseUrl}/token/refresh/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({}),
+        credentials: 'include'  // Necessary to include cookies
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.access) {
+                chrome.action.setBadgeText({ text: 'Refr' });
+                chrome.action.setBadgeBackgroundColor({ color: 'blue' }); // Optional: Set the badge color
+                return data.access;
+            } else {
+                console.log('Failed to get a new access token');
+                return null;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
             return null;
-        }
-        else {
-            startApp();
-        }
-    }).catch(error => {
-        console.error('this is the error: ', error);
-    });
+        });
 }
+
+
+
 
 function startApp() {
     console.log('The app has started!')
-
-
 }
 
+
 chrome.action.onClicked.addListener((tab) => {
-    console.log('Icon clicked');
-    console.log(tab);
+    console.log('Extension icon clicked');
     activateApp(tab);
 });
-
-
-

@@ -11,9 +11,6 @@ def home(request):
     return HttpResponse("Hello, Django!")
 
 
-
-
-
 def set_jwt_cookies(user, response):
         refresh = RefreshToken.for_user(user)
         cookie_name = settings.REST_AUTH['JWT_AUTH_COOKIE']
