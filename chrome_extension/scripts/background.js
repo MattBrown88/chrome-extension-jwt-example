@@ -27,12 +27,11 @@ function verifyToken() {
 
     return new Promise((resolve, reject) => {
 
-        fetch(`${url}/token/verify/`, {
-            method: 'POST',
+        fetch(`${url}/dj-rest-auth/user/`, {
+            method: 'GET',  // Use GET to check session validity
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({}),
             credentials: 'include'  // Necessary to include cookies
         })
             .then(response => {
@@ -56,33 +55,33 @@ function verifyToken() {
 
 
 
-function getNewAccessToken() {
-    console.log('getNewAccessToken()');
-    let url = baseUrl;
-    return fetch(`${baseUrl}/token/refresh/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({}),
-        credentials: 'include'  // Necessary to include cookies
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.access) {
-                chrome.action.setBadgeText({ text: 'Refr' });
-                chrome.action.setBadgeBackgroundColor({ color: 'blue' }); // Optional: Set the badge color
-                return data.access;
-            } else {
-                console.log('Failed to get a new access token');
-                return null;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            return null;
-        });
-}
+// function getNewAccessToken() {
+//     console.log('getNewAccessToken()');
+//     let url = baseUrl;
+//     return fetch(`${baseUrl}/token/refresh/`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({}),
+//         credentials: 'include'  // Necessary to include cookies
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.access) {
+//                 chrome.action.setBadgeText({ text: 'Refr' });
+//                 chrome.action.setBadgeBackgroundColor({ color: 'blue' }); // Optional: Set the badge color
+//                 return data.access;
+//             } else {
+//                 console.log('Failed to get a new access token');
+//                 return null;
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//             return null;
+//         });
+// }
 
 
 

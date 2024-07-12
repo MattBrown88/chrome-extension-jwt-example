@@ -58,8 +58,8 @@ MIDDLEWARE = [
     
     # NEW
     "allauth.account.middleware.AccountMiddleware",
-    "core.middleware.MoveJWTCookieIntoTheBody",
-    "core.middleware.MoveJWTRefreshCookieIntoTheBody",
+    # "core.middleware.MoveJWTCookieIntoTheBody",
+    # "core.middleware.MoveJWTRefreshCookieIntoTheBody",
     
 ]
 
@@ -126,28 +126,19 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 from datetime import timedelta
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=10),
-    "REFRESH_TOKEN_LIFETIME": timedelta(seconds=30),
-    "TOKEN_BLACKLIST_ENABLED": True,
-    "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
-    "UPDATE_LAST_LOGIN": True,
-    "SIGNING_KEY": 'aklsdfjlk2k34234lkmlakdfASDFa098442',
-    "ALGORITHM": "HS256",
-}
+SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = True
+
 
 REST_AUTH = {
-    "USE_JWT": True,
-    "JWT_AUTH_COOKIE": "my-access-token",
-    "JWT_AUTH_REFRESH_COOKIE": "my-refresh-token",
-    "JWT_AUTH_HTTPONLY": True,
-    "JWT_AUTH_SECURE": 'lax',
+    "USE_JWT": False,
     "USER_DETAILS_SERIALIZER": "apps.users.serializers.CustomUserSerializer",
 }
 
@@ -185,3 +176,5 @@ TEMPLATES = [
         },
     },
 ]
+
+

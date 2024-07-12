@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from core.views import home, CustomLoginView
+from core.views import home
 from dj_rest_auth.jwt_auth import get_refresh_view
 from django.urls import path
 from rest_framework_simplejwt.views import TokenVerifyView
@@ -26,11 +26,7 @@ from rest_framework_simplejwt.views import TokenVerifyView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
+    path('dj-rest-auth/', include('dj_rest_auth.urls'))
     
     path("accounts/", include("allauth.urls")),
-    path("accounts/login", CustomLoginView.as_view(), name="account_login"),
-    
-    # restauth views
-    path("token/verify/", TokenVerifyView.as_view(), name="token_verify"),
-    path("token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
 ]
