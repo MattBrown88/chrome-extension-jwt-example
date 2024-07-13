@@ -26,7 +26,7 @@ from rest_framework_simplejwt.views import TokenVerifyView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
-    path('dj-rest-auth/', include('dj_rest_auth.urls'))
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
     
     path("accounts/", include("allauth.urls")),
 ]

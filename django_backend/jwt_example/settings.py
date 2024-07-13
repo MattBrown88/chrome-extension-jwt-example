@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     
     # NEW
-    "rest_framework_simplejwt",
+    "rest_framework",
     "rest_framework.authtoken",
     "dj_rest_auth",
     "dj_rest_auth.registration",
@@ -123,24 +123,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # NEW
-from datetime import timedelta
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
 
-
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_AGE = 10 
 CSRF_COOKIE_SECURE = True
 
-
-REST_AUTH = {
-    "USE_JWT": False,
-    "USER_DETAILS_SERIALIZER": "apps.users.serializers.CustomUserSerializer",
-}
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -152,7 +146,6 @@ AUTHENTICATION_BACKENDS = [
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS=False
 LOGIN_REDIRECT_URL = '/'
-
 
 CSRF_TRUSTED_ORIGINS = [
     'chrome-extension://pnchahhkakickfihmeklhjgeacjhcdii'
